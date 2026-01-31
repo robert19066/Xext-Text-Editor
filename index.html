@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xext</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">Xext</div>
+            <nav class="nav-tabs">
+                <button class="tab-btn active" data-tab="editor">Editor</button>
+                <button class="tab-btn" data-tab="lan">LAN</button>
+            </nav>
+            <div class="actions">
+                <button id="importBtn" title="Import">📁 Import</button>
+                <button id="exportBtn" title="Export">💾 Export</button>
+                <button id="printBtn" title="Print">🖨️ Print</button>
+            </div>
+        </header>
+
+        <main>
+            <div class="tab-content active" id="editor-tab">
+                <textarea id="textEditor" placeholder="Start typing..."></textarea>
+            </div>
+
+            <div class="tab-content" id="lan-tab">
+                <div class="lan-container">
+                    <div class="lan-section">
+                        <h2>Host a Session</h2>
+                        <p>Share your document with others on the same network</p>
+                        <div class="input-group">
+                            <label for="portInput">Port:</label>
+                            <input type="number" id="portInput" value="3000" min="1024" max="65535">
+                        </div>
+                        <button id="startServerBtn" class="primary-btn">Start Server</button>
+                        <div id="serverInfo" class="info-box hidden">
+                            <p>Server running at:</p>
+                            <div class="address-box">
+                                <code id="serverAddress"></code>
+                                <button id="copyAddressBtn" class="copy-btn">📋 Copy</button>
+                            </div>
+                            <button id="stopServerBtn" class="secondary-btn">Stop Server</button>
+                        </div>
+                    </div>
+
+                    <div class="lan-divider">OR</div>
+
+                    <div class="lan-section">
+                        <h2>Join a Session</h2>
+                        <p>Enter the address from the host machine</p>
+                        <div class="input-group">
+                            <label for="addressInput">Address (IP:Port):</label>
+                            <input type="text" id="addressInput" placeholder="192.168.1.100:3000">
+                        </div>
+                        <button id="connectBtn" class="primary-btn">Connect</button>
+                        <div id="connectionInfo" class="info-box hidden">
+                            <p class="success">✓ Connected to: <span id="connectedAddress"></span></p>
+                            <button id="disconnectBtn" class="secondary-btn">Disconnect</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <div id="statusBar">Ready</div>
+        </footer>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.6.1/socket.io.min.js"></script>
+    <script src="renderer.js"></script>
+</body>
+</html>

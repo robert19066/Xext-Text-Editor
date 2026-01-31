@@ -1,0 +1,33 @@
+{
+  "name": "xext",
+  "version": "1.0.0",
+  "description": "Collaborative text editor with LAN support",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder --windows"
+  },
+  "keywords": ["text-editor", "collaborative", "lan"],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^28.0.0",
+    "electron-builder": "^24.9.1"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "socket.io": "^4.6.1",
+    "socket.io-client": "^4.6.1"
+  },
+  "build": {
+    "appId": "com.xext.app",
+    "productName": "Xext",
+    "win": {
+      "target": "nsis",
+      "icon": "build/icon.ico"
+    },
+    "directories": {
+      "buildResources": "build"
+    }
+  }
+}
