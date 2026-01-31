@@ -40,6 +40,21 @@ function getLocalIP() {
 
 // Start collaboration server
 ipcMain.handle('start-server', async (event, port) => {
+  // Ask for permission via dialog
+  const result = await dialog.showMessageBox(mainWindow, {
+    type: 'question',
+    buttons: ['Allow', 'Deny'],
+    defaultId: 0,
+    title: 'Network Permission',
+    message: 'Xext wants to start a server',
+    detail: `This will allow other devices on your network to connect on port ${port}. Do you want to allow this?`
+  });
+
+  // If user clicked "Deny" (index 1)
+  if (result.response === 1) {
+    return { success: false, error: 'Permission denied by user' };
+  }
+
   if (server) {
     return { success: false, error: 'Server already running' };
   }
@@ -56,6 +71,13 @@ ipcMain.handle('start-server', async (event, port) => {
 
     io.on('connection', (socket) => {
       clients.add(socket.id);
+      console.log('Client connected:', socket.id);
+      
+      // Notify main window about connection
+      mainWindow.webContents.send('client-connected', { 
+        clientId: socket.id, 
+        totalClients: clients.size 
+      });
       
       // Send current document to new client
       socket.emit('initial-content', documentContent);
@@ -67,6 +89,11 @@ ipcMain.handle('start-server', async (event, port) => {
 
       socket.on('disconnect', () => {
         clients.delete(socket.id);
+        console.log('Client disconnected:', socket.id);
+        mainWindow.webContents.send('client-disconnected', { 
+          clientId: socket.id, 
+          totalClients: clients.size 
+        });
       });
     });
 
@@ -93,11 +120,6 @@ ipcMain.handle('stop-server', async () => {
     httpServer = null;
   }
   return { success: true };
-});
-
-// Connect to remote server
-ipcMain.handle('connect-to-server', async (event, address) => {
-  return { success: true, address };
 });
 
 // File operations

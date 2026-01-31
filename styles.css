@@ -191,8 +191,13 @@ main {
     transition: background 0.2s;
 }
 
-.primary-btn:hover {
+.primary-btn:hover:not(:disabled) {
     background: #5568d3;
+}
+
+.primary-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
 }
 
 .secondary-btn {
@@ -205,6 +210,7 @@ main {
     font-size: 14px;
     cursor: pointer;
     transition: all 0.2s;
+    margin-top: 12px;
 }
 
 .secondary-btn:hover {
@@ -265,6 +271,45 @@ main {
 
 .copy-btn:hover {
     background: #333;
+}
+
+.connection-status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 0;
+    font-size: 14px;
+}
+
+.connection-status.connected {
+    color: #4ade80;
+}
+
+.status-indicator {
+    font-size: 20px;
+    animation: pulse 2s infinite;
+}
+
+.connection-status.connected .status-indicator {
+    color: #4ade80;
+}
+
+.connection-status:not(.connected) .status-indicator {
+    color: #888;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+.error-box {
+    border-color: #ef4444;
+    background: rgba(239, 68, 68, 0.1);
+}
+
+.error {
+    color: #ef4444 !important;
 }
 
 .success {

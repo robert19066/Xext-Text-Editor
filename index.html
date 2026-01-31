@@ -37,10 +37,14 @@
                         </div>
                         <button id="startServerBtn" class="primary-btn">Start Server</button>
                         <div id="serverInfo" class="info-box hidden">
-                            <p>Server running at:</p>
+                            <p>✅ Server running at:</p>
                             <div class="address-box">
                                 <code id="serverAddress"></code>
                                 <button id="copyAddressBtn" class="copy-btn">📋 Copy</button>
+                            </div>
+                            <div class="connection-status">
+                                <span class="status-indicator">●</span>
+                                <span id="connectedClients">0 clients connected</span>
                             </div>
                             <button id="stopServerBtn" class="secondary-btn">Stop Server</button>
                         </div>
@@ -57,8 +61,15 @@
                         </div>
                         <button id="connectBtn" class="primary-btn">Connect</button>
                         <div id="connectionInfo" class="info-box hidden">
-                            <p class="success">✓ Connected to: <span id="connectedAddress"></span></p>
+                            <div class="connection-status connected">
+                                <span class="status-indicator">●</span>
+                                <span>Connected to: <span id="connectedAddress"></span></span>
+                            </div>
                             <button id="disconnectBtn" class="secondary-btn">Disconnect</button>
+                        </div>
+                        <div id="connectionError" class="info-box error-box hidden">
+                            <p class="error">❌ <span id="errorMessage"></span></p>
+                            <button id="retryBtn" class="secondary-btn">Retry</button>
                         </div>
                     </div>
                 </div>
